@@ -1,0 +1,87 @@
+body {
+  background-color: #333;
+  color: #fff;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #444;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.task-input {
+  margin-bottom: 20px;
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #555;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.task-item button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.task-item button:hover {
+  background-color: #c82333;
+}
+
+.task-item button.reminder-btn {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.task-item button.reminder-btn:hover {
+  background-color: #138496;
+}
+
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.dark-mode {
+  background-color: #222;
+  color: #f8f9fa;
+}
+
+.dark-mode .container {
+  background-color: #333;
+}
+
+.dark-mode .task-item {
+  background-color: #666;
+}
+
+.dark-mode button {
+  background-color: #dc3545;
+  color: #fff;
+}
