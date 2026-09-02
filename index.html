@@ -75,7 +75,7 @@ h1 .accent{color:var(--accent)}
 .portrait-wrap{position:relative;max-width:470px;margin-left:auto}
 .portrait-glow{position:absolute;inset:12% -10% -6% 10%;background:radial-gradient(circle,rgba(255,138,42,.28),transparent 65%);filter:blur(28px)}
 .portrait-card{position:relative;border:1px solid rgba(255,255,255,.11);background:linear-gradient(180deg,#111a29,#0c1320);border-radius:30px;padding:12px;box-shadow:var(--shadow);transform:rotate(1.5deg)}
-.portrait-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;border-radius:22px}
+.portrait-card img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block;border-radius:22px;background:#101827}
 .portrait-label{position:absolute;left:-24px;bottom:28px;padding:13px 16px;border-radius:16px;background:rgba(7,11,20,.91);backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:var(--shadow)}
 .portrait-label b{display:block;font-size:14px}
 .portrait-label span{color:var(--accent2);font:600 12px "IBM Plex Mono",monospace}
@@ -173,7 +173,7 @@ h2{font-size:clamp(34px,5vw,52px);letter-spacing:-.045em;line-height:1.05;margin
 <nav class="nav">
   <div class="container nav-inner">
     <a class="brand" href="#top">
-      <span class="brand-avatar"><img src="assets/pycoder-avatar.jpg" alt="Olawumi Oluwafemi"></span>
+      <span class="brand-avatar"><img src="./assets/pycoder-avatar.jpg?v=20260902-2" alt="Olawumi Oluwafemi" width="180" height="180" loading="eager" decoding="async"></span>
       <span>PYcoder<small>Olawumi Oluwafemi</small></span>
     </a>
     <div class="nav-links">
@@ -208,7 +208,7 @@ h2{font-size:clamp(34px,5vw,52px);letter-spacing:-.045em;line-height:1.05;margin
     <div class="portrait-wrap">
       <div class="portrait-glow"></div>
       <div class="portrait-card">
-        <img src="assets/pycoder-hero.jpg" alt="Olawumi Oluwafemi — Pycoder">
+        <img src="./assets/pycoder-hero.jpg?v=20260902-2" alt="Olawumi Oluwafemi — Pycoder" width="320" height="400" loading="eager" fetchpriority="high" decoding="async">
         <div class="portrait-label">
           <b>Olawumi Oluwafemi</b>
           <span>@pycoder · Python Developer</span>
