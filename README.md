@@ -17,12 +17,14 @@ A responsive browser-based task manager and project showcase by
 - Persist the selected light or dark theme.
 - Responsive and keyboard-accessible interface.
 
-## Featured engineering work
+## Project portfolio
 
-The page also presents
-[ProofThread](https://github.com/Oluwafemi1x/proofthread-telegram-bot), a privacy-first
-decision and accountability ledger for Telegram groups built with Python, aiogram, PostgreSQL,
-SQLAlchemy, Alembic, and Docker.
+| Project | Status | Links |
+|---|---|---|
+| ProofThread Telegram Bot | Completed; hosting pending | [GitHub](https://github.com/Oluwafemi1x/proofthread-telegram-bot) |
+| Pycoder URL Shortener | Live | [Live demo](https://oluwafemi1x.github.io/url-shortener/) · [GitHub](https://github.com/Oluwafemi1x/url-shortener) |
+| FESOMI School Management System | Completed Windows desktop application | Demo and repository available on request |
+| Task Manager | Live | [Live demo](https://oluwafemi1x.github.io/Task-Manager/) · [GitHub](https://github.com/Oluwafemi1x/Task-Manager) |
 
 ## Quality checks
 
@@ -37,4 +39,3 @@ GitHub Actions runs both checks on every push and pull request.
 
 Task data remains in the visitor's browser `localStorage`. This static site does not send the task
 list to a server.
-
