@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const taskInput = document.getElementById('taskInput');
   const addTaskBtn = document.getElementById('addTaskBtn');
   const taskList = document.getElementById('taskList');
@@ -6,84 +6,173 @@ document.addEventListener('DOMContentLoaded', function() {
   const clearAllBtn = document.getElementById('clearAllBtn');
   const searchInput = document.getElementById('searchInput');
   const modeToggle = document.querySelector('.mode-toggle');
+  const emptyState = document.getElementById('emptyState');
+  const taskStatus = document.getElementById('taskStatus');
+  const currentYear = document.getElementById('currentYear');
 
-  // Ensure task input can be focused
-  taskInput.focus();
+  if (!taskInput || !addTaskBtn || !taskList || !saveTasksBtn || !clearAllBtn || !searchInput) {
+    return;
+  }
 
-  addTaskBtn.addEventListener('click', function() {
-    const taskText = taskInput.value.trim();
-    if (taskText !== '') {
-      const taskItem = document.createElement('li');
-      taskItem.classList.add('task-item', 'list-group-item');
-      taskItem.innerHTML = `
-        ${taskText}
-        <button class="btn btn-danger btn-sm">Delete</button>
-        <button class="btn reminder-btn btn-sm">Remind Me</button>
-      `;
-      taskList.appendChild(taskItem);
-      taskInput.value = ''; // Clear input after adding
+  const storageKey = 'build-with-femi.tasks.v2';
+  const legacyStorageKey = 'tasks';
+
+  function announce(message) {
+    if (!taskStatus) return;
+    taskStatus.textContent = message;
+  }
+
+  function updateEmptyState() {
+    if (!emptyState) return;
+    emptyState.hidden = taskList.children.length > 0;
+  }
+
+  function createActionButton(label, className) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = `btn btn-sm ${className}`;
+    button.textContent = label;
+    return button;
+  }
+
+  function createTaskElement(taskText) {
+    const taskItem = document.createElement('li');
+    taskItem.className = 'task-item list-group-item';
+
+    const text = document.createElement('span');
+    text.className = 'task-text';
+    text.textContent = taskText;
+
+    taskItem.append(
+      text,
+      createActionButton('Remind Me', 'reminder-btn'),
+      createActionButton('Delete', 'btn-danger')
+    );
+    return taskItem;
+  }
+
+  function addTask(taskText, shouldAnnounce = true) {
+    const cleanText = taskText.trim();
+    if (!cleanText) {
+      if (shouldAnnounce) announce('Enter a task before adding it.');
+      return;
+    }
+
+    taskList.appendChild(createTaskElement(cleanText));
+    taskInput.value = '';
+    updateEmptyState();
+    if (shouldAnnounce) announce('Task added. Select Save Tasks to keep it in this browser.');
+  }
+
+  function taskTexts() {
+    return Array.from(taskList.querySelectorAll('.task-text')).map((task) => task.textContent);
+  }
+
+  function loadTasks() {
+    let tasks = [];
+    try {
+      const saved = localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey);
+      const parsed = saved ? JSON.parse(saved) : [];
+      if (Array.isArray(parsed)) {
+        tasks = parsed
+          .map((task) => typeof task === 'string' ? task.replace(/Delete\s*Remind Me$/i, '').trim() : '')
+          .filter(Boolean);
+      }
+    } catch (error) {
+      console.warn('Saved tasks could not be restored.', error);
+      announce('Saved tasks could not be restored. You can start a fresh list.');
+    }
+
+    tasks.forEach((task) => addTask(task, false));
+    updateEmptyState();
+  }
+
+  addTaskBtn.addEventListener('click', function () {
+    addTask(taskInput.value);
+  });
+
+  taskInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      addTask(taskInput.value);
     }
   });
 
-  // Remove task functionality
-  taskList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('btn-danger')) {
-      e.target.parentElement.remove();
+  taskList.addEventListener('click', function (event) {
+    const button = event.target.closest('button');
+    if (!button) return;
+
+    const taskItem = button.closest('.task-item');
+    const text = taskItem ? taskItem.querySelector('.task-text') : null;
+    if (!taskItem || !text) return;
+
+    if (button.classList.contains('btn-danger')) {
+      taskItem.remove();
+      updateEmptyState();
+      announce('Task deleted. Save the list to keep this change.');
+      return;
+    }
+
+    if (button.classList.contains('reminder-btn')) {
+      const response = window.prompt('Set reminder time in minutes:');
+      if (response === null) return;
+
+      const reminderTime = Number(response);
+      if (!Number.isFinite(reminderTime) || reminderTime <= 0) {
+        announce('Enter a valid reminder time greater than zero.');
+        return;
+      }
+
+      window.setTimeout(function () {
+        window.alert(`Reminder: Time to complete your task: "${text.textContent}"`);
+      }, reminderTime * 60 * 1000);
+      announce(`Reminder set for "${text.textContent}" in ${reminderTime} minute(s).`);
     }
   });
 
-  // Toggle dark mode
-  modeToggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
+  saveTasksBtn.addEventListener('click', function () {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(taskTexts()));
+      localStorage.removeItem(legacyStorageKey);
+      announce('Tasks saved privately in this browser.');
+    } catch (error) {
+      console.warn('Tasks could not be saved.', error);
+      announce('This browser did not allow the tasks to be saved.');
+    }
   });
 
-  // Save tasks to localStorage
-  saveTasksBtn.addEventListener('click', function() {
-    const tasks = Array.from(taskList.children).map(task => task.textContent.trim());
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+  clearAllBtn.addEventListener('click', function () {
+    if (taskList.children.length === 0 || window.confirm('Clear every task from this browser?')) {
+      taskList.replaceChildren();
+      localStorage.removeItem(storageKey);
+      localStorage.removeItem(legacyStorageKey);
+      updateEmptyState();
+      announce('All tasks cleared.');
+    }
   });
 
-  // Clear all tasks and localStorage
-  clearAllBtn.addEventListener('click', function() {
-    taskList.innerHTML = '';
-    localStorage.removeItem('tasks');
-  });
-
-  // Search task functionality
-  searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const tasks = Array.from(taskList.children);
-    tasks.forEach(task => {
-      const taskText = task.textContent.toLowerCase();
-      task.style.display = taskText.includes(searchTerm) ? 'block' : 'none';
+  searchInput.addEventListener('input', function () {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    Array.from(taskList.children).forEach((task) => {
+      const text = task.querySelector('.task-text');
+      task.hidden = Boolean(text && !text.textContent.toLowerCase().includes(searchTerm));
     });
   });
 
-  // Add event listener for "Remind Me" button
-  taskList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('reminder-btn')) {
-      const taskItem = e.target.parentElement;
-      const taskText = taskItem.textContent.trim();
+  if (modeToggle) {
+    const savedTheme = localStorage.getItem('build-with-femi.theme');
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
 
-      // Ask the user to set a time for the reminder (in minutes)
-      const reminderTime = parseInt(prompt('Set reminder time in minutes:'), 10);
+    modeToggle.addEventListener('click', function () {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('build-with-femi.theme', isDark ? 'dark' : 'light');
+      const icon = modeToggle.querySelector('i');
+      if (icon) icon.className = isDark ? 'fa fa-sun-o' : 'fa fa-moon-o';
+    });
+  }
 
-      if (!isNaN(reminderTime) && reminderTime > 0) {
-        // Convert reminder time from minutes to milliseconds
-        const reminderMilliseconds = reminderTime * 60 * 1000;
-
-        // Use setTimeout to trigger a reminder after the specified time
-        setTimeout(() => {
-          alert(`Reminder: Time to complete your task: "${taskText}"`);
-          // Optional: You can also play an alarm sound here if needed
-          // let alarm = new Audio('path-to-your-alarm-sound.mp3');
-          // alarm.play();
-        }, reminderMilliseconds);
-
-        alert(`Reminder set for "${taskText}" in ${reminderTime} minute(s)!`);
-      } else {
-        alert('Please enter a valid time in minutes.');
-      }
-    }
-  });
+  if (currentYear) currentYear.textContent = String(new Date().getFullYear());
+  loadTasks();
+  taskInput.focus();
 });
