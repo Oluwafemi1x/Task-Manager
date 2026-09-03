@@ -3,33 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Manager</title>
+  <meta name="description" content="Oluwafemi Olawumi Steven's Task Manager and featured Python engineering projects.">
+  <meta name="theme-color" content="#071526">
+  <title>Task Manager | Build with Femi</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Task Manager</h1>
-    <div class="mode-toggle">
-      <i class="fa fa-moon-o"></i>
-    </div>
-    <div class="task-input d-flex justify-content-center">
-      <input type="text" id="taskInput" placeholder="Enter a task" class="form-control me-2">
-      <button id="addTaskBtn" class="btn btn-primary">Add Task</button>
-    </div>
-    <div class="text-center mt-3">
-      <button id="saveTasksBtn" class="btn btn-success me-2">Save Tasks</button>
-      <button id="clearAllBtn" class="btn btn-warning">Clear All Tasks</button>
-    </div>
-    <input type="text" id="searchInput" placeholder="Search for a task" class="form-control my-3">
-    <ul class="task-list list-group" id="taskList"></ul>
-  </div>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Build with Femi home">
+      <span class="brand-mark" aria-hidden="true">BF</span>
+      <span>
+        <strong>Build with Femi</strong>
+        <small>Python engineer</small>
+      </span>
+    </a>
 
-  <!--------Footer------------>
+    <nav aria-label="Primary navigation">
+      <a href="#task-manager">Task Manager</a>
+      <a href="#projects">Projects</a>
+      <a href="https://github.com/Oluwafemi1x" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+
+    <button class="mode-toggle" type="button" aria-label="Switch between light and dark mode" title="Toggle colour theme">
+      <i class="fa fa-moon-o" aria-hidden="true"></i>
+    </button>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Practical software. Thoughtful engineering.</p>
+      <h1 id="hero-title">Organise today.<br><span>Build what matters.</span></h1>
+      <p class="hero-copy">A focused task manager and a growing collection of dependable Python products built by Oluwafemi Olawumi Steven.</p>
+      <a class="primary-link" href="#task-manager">Open Task Manager <span aria-hidden="true">↓</span></a>
+    </section>
+
+    <section id="task-manager" class="task-section" aria-labelledby="task-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Live project · 01</p>
+          <h2 id="task-title">Task Manager</h2>
+        </div>
+        <p>Add, search, save, clear, and schedule reminders for everyday tasks. Your list stays privately in this browser.</p>
+      </div>
+
+      <div class="task-manager-shell container">
+        <div class="task-input d-flex justify-content-center">
+          <label class="visually-hidden" for="taskInput">New task</label>
+          <input type="text" id="taskInput" placeholder="What needs to be done?" class="form-control me-2" maxlength="240" autocomplete="off">
+          <button id="addTaskBtn" class="btn btn-primary" type="button">Add Task</button>
+        </div>
+
+        <div class="task-actions text-center mt-3">
+          <button id="saveTasksBtn" class="btn btn-success me-2" type="button">Save Tasks</button>
+          <button id="clearAllBtn" class="btn btn-warning" type="button">Clear All</button>
+        </div>
+
+        <label class="visually-hidden" for="searchInput">Search tasks</label>
+        <input type="search" id="searchInput" placeholder="Search your tasks" class="form-control my-3" autocomplete="off">
+        <p id="emptyState" class="empty-state">Your task list is ready.</p>
+        <ul class="task-list list-group" id="taskList" aria-live="polite"></ul>
+        <p id="taskStatus" class="task-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="projects" class="projects-section" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected engineering work</p>
+          <h2 id="projects-title">Featured Projects</h2>
+        </div>
+        <p>Products designed around real operational problems, clear user flows, and maintainable code.</p>
+      </div>
+
+      <article class="project-card proofthread-card">
+        <div class="project-number" aria-hidden="true">02</div>
+        <div class="project-content">
+          <div class="project-meta">
+            <span class="status-dot"></span>
+            <span>Open source · Telegram automation</span>
+          </div>
+          <h3>ProofThread</h3>
+          <p class="project-tagline">Accountable group memory for Telegram.</p>
+          <p>ProofThread turns fast-moving conversations into evidence-linked decisions, owned actions, deadlines, and unanswered questions—without silently archiving the entire chat.</p>
+
+          <ul class="feature-list">
+            <li>Human-confirmed decision and action ledger</li>
+            <li>Source-message evidence and lifecycle history</li>
+            <li>Due reminders, exports, and permission controls</li>
+            <li>PostgreSQL, Alembic, Docker, and authenticated webhooks</li>
+          </ul>
+
+          <div class="tech-stack" aria-label="Technologies used">
+            <span>Python</span>
+            <span>aiogram</span>
+            <span>PostgreSQL</span>
+            <span>SQLAlchemy</span>
+            <span>Docker</span>
+          </div>
+
+          <div class="project-links">
+            <a class="primary-link" href="https://github.com/Oluwafemi1x/proofthread-telegram-bot" target="_blank" rel="noopener noreferrer">
+              View repository <i class="fa fa-external-link" aria-hidden="true"></i>
+            </a>
+            <a class="text-link" href="https://github.com/Oluwafemi1x/proofthread-telegram-bot#readme" target="_blank" rel="noopener noreferrer">Read documentation</a>
+          </div>
+        </div>
+
+        <div class="project-visual" aria-hidden="true">
+          <div class="terminal-bar"><span></span><span></span><span></span></div>
+          <div class="telegram-message message-one">
+            <small>TEAM CHAT</small>
+            <strong>/decision</strong>
+            <p>Launch the public beta on Friday.</p>
+          </div>
+          <div class="thread-line"></div>
+          <div class="telegram-message message-two">
+            <small>PROOFTHREAD</small>
+            <strong>Decision captured ✓</strong>
+            <p>Owner, evidence, and history saved.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
   <footer class="footer">
-    <p>&copy; 2024 Olawumi Oluwafemi. All rights reserved.</p>
+    <p>Designed and engineered by <strong>Oluwafemi Olawumi Steven</strong>.</p>
+    <a href="https://github.com/Oluwafemi1x" target="_blank" rel="noopener noreferrer">GitHub <i class="fa fa-github" aria-hidden="true"></i></a>
+    <p>&copy; <span id="currentYear">2026</span> Build with Femi.</p>
   </footer>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>
