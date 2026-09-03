@@ -1,180 +1,385 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Oluwafemi Olawumi Steven's Task Manager and featured Python engineering projects.">
-  <meta name="theme-color" content="#071526">
-  <title>Task Manager | Build with Femi</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>Olawumi Oluwafemi — Pycoder | Python Developer</title>
+<meta name="description" content="Portfolio of Olawumi Oluwafemi (Pycoder), a Python developer focused on backend systems, automation, debugging, business software and practical developer solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14;
+  --bg2:#0b1120;
+  --panel:#101827;
+  --panel2:#121d30;
+  --text:#f7f8fb;
+  --muted:#a8b1c2;
+  --line:rgba(255,255,255,.10);
+  --accent:#ff8a2a;
+  --accent2:#ffb35c;
+  --green:#64e1b4;
+  --shadow:0 30px 80px rgba(0,0,0,.34);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(255,138,42,.10),transparent 24%),
+    radial-gradient(circle at 15% 0%,rgba(85,123,255,.09),transparent 22%),
+    linear-gradient(180deg,#070b14 0%,#09101d 52%,#070b14 100%);
+  color:var(--text);
+  font-family:"Manrope",system-ui,sans-serif;
+  line-height:1.6;
+}
+a{color:inherit}
+.container{width:min(1160px,calc(100% - 40px));margin:auto}
+.nav{
+  position:sticky;top:0;z-index:30;
+  backdrop-filter:blur(18px);
+  background:rgba(7,11,20,.72);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.02em}.brand-avatar{width:42px;height:42px;border-radius:13px;overflow:hidden;display:block;flex:0 0 42px;border:1px solid rgba(255,255,255,.14);box-shadow:0 8px 24px rgba(0,0,0,.28)}.brand-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.brand-mark{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-weight:700;
+  background:linear-gradient(135deg,var(--accent),#ff5f3d);
+  color:#140a04;box-shadow:0 12px 30px rgba(255,138,42,.22)
+}
+.brand small{display:block;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{text-decoration:none;color:#c7d0de;font-size:14px;font-weight:600}
+.nav-links a:hover{color:white}
+.nav-cta{padding:10px 15px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.03)}
+.hero{padding:88px 0 70px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+.eyebrow{display:inline-flex;gap:9px;align-items:center;border:1px solid rgba(255,138,42,.25);background:rgba(255,138,42,.07);padding:8px 12px;border-radius:999px;color:#ffd4af;font-size:12px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(100,225,180,.10)}
+h1{font-size:clamp(48px,7vw,82px);line-height:.98;letter-spacing:-.055em;margin:22px 0 24px}
+h1 .accent{color:var(--accent)}
+.hero-copy{font-size:19px;color:var(--muted);max-width:720px;margin:0}
+.hero-copy strong{color:white}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;padding:13px 18px;border-radius:12px;font-weight:800;font-size:14px;transition:.25s ease}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#ff6837);color:#160b04;box-shadow:0 16px 40px rgba(255,138,42,.19)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-secondary{border:1px solid var(--line);background:rgba(255,255,255,.04);color:white}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.hero-meta{display:flex;gap:20px;flex-wrap:wrap;margin-top:30px;color:#8f9bad;font-size:13px}
+.hero-meta span{display:flex;gap:8px;align-items:center}
+.portrait-wrap{position:relative;max-width:470px;margin-left:auto}
+.portrait-glow{position:absolute;inset:12% -10% -6% 10%;background:radial-gradient(circle,rgba(255,138,42,.28),transparent 65%);filter:blur(28px)}
+.portrait-card{position:relative;border:1px solid rgba(255,255,255,.11);background:linear-gradient(180deg,#111a29,#0c1320);border-radius:30px;padding:12px;box-shadow:var(--shadow);transform:rotate(1.5deg)}
+.portrait-card img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block;border-radius:22px;background:#101827}
+.portrait-label{position:absolute;left:-24px;bottom:28px;padding:13px 16px;border-radius:16px;background:rgba(7,11,20,.91);backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:var(--shadow)}
+.portrait-label b{display:block;font-size:14px}
+.portrait-label span{color:var(--accent2);font:600 12px "IBM Plex Mono",monospace}
+.section{padding:78px 0}
+.section-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:30px}
+.kicker{font:600 12px "IBM Plex Mono",monospace;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+h2{font-size:clamp(34px,5vw,52px);letter-spacing:-.045em;line-height:1.05;margin:8px 0 0}
+.section-sub{color:var(--muted);max-width:580px;margin:0}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric{padding:22px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025)}
+.metric b{font-size:28px;display:block;letter-spacing:-.04em}
+.metric span{font-size:13px;color:var(--muted)}
+.project-feature{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:28px;
+  border:1px solid rgba(255,255,255,.10);border-radius:28px;
+  background:linear-gradient(135deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  overflow:hidden;box-shadow:var(--shadow)
+}
+.project-copy{padding:36px}
+.project-copy h3{font-size:34px;letter-spacing:-.04em;margin:8px 0 14px}
+.project-copy p{color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.tag{font:500 12px "IBM Plex Mono",monospace;border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:#cbd5e3;background:rgba(255,255,255,.025)}
+.feature-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0 26px}
+.feature{display:flex;gap:8px;align-items:flex-start;color:#d7dfeb;font-size:13px}
+.feature:before{content:"✓";color:var(--green);font-weight:800}
+.project-ui{min-height:430px;background:
+  radial-gradient(circle at 80% 0%,rgba(255,138,42,.16),transparent 38%),
+  #0a111d;padding:28px;display:flex;align-items:center}
+.app-window{width:100%;border:1px solid rgba(255,255,255,.10);background:#eef2f7;border-radius:18px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);color:#162033}
+.app-top{height:44px;background:#17243a;display:flex;align-items:center;gap:7px;padding:0 14px}
+.app-dot{width:9px;height:9px;border-radius:50%;background:#5e6c82}
+.app-body{display:grid;grid-template-columns:120px 1fr;min-height:310px}
+.sidebar{background:#101a2b;color:#dce5f1;padding:16px 10px}
+.sidebar strong{font-size:11px;display:block;margin:4px 5px 18px}
+.side-item{font-size:9px;padding:8px;border-radius:7px;margin-bottom:4px;color:#9eacc0}
+.side-item.active{background:#ff8a2a;color:#1b0c03;font-weight:800}
+.dashboard{padding:20px}
+.dashboard h4{margin:0 0 15px;font-size:18px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat-card{background:white;border-radius:9px;padding:12px;box-shadow:0 5px 14px rgba(19,31,52,.08)}
+.stat-card b{display:block;font-size:18px}
+.stat-card span{font-size:8px;color:#718096}
+.fake-table{margin-top:14px;background:white;border-radius:9px;padding:12px}
+.fake-line{height:7px;border-radius:6px;background:#e6ebf2;margin:8px 0}
+.fake-line:nth-child(2){width:82%}.fake-line:nth-child(3){width:69%}.fake-line:nth-child(4){width:91%}
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:20px}
+.project-card{border:1px solid var(--line);border-radius:22px;padding:26px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.018));transition:.25s ease}
+.project-card:hover{transform:translateY(-4px);border-color:rgba(255,138,42,.32)}
+.project-card h3{font-size:23px;margin:12px 0 10px;letter-spacing:-.03em}
+.project-card p{color:var(--muted);font-size:14px}
+.project-number{font:600 12px "IBM Plex Mono",monospace;color:var(--accent)}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.service{padding:25px;border:1px solid var(--line);border-radius:20px;background:#0e1625}
+.service-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:rgba(255,138,42,.10);color:var(--accent);font-family:"IBM Plex Mono"}
+.service h3{margin:15px 0 8px;font-size:20px}
+.service p{margin:0;color:var(--muted);font-size:14px}
+.stack{display:flex;flex-wrap:wrap;gap:10px}
+.stack span{padding:10px 13px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);font:500 12px "IBM Plex Mono",monospace;color:#d6dfeb}
+.contact{
+  display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;
+  padding:38px;border:1px solid rgba(255,138,42,.25);border-radius:28px;
+  background:linear-gradient(135deg,rgba(255,138,42,.10),rgba(255,255,255,.025))
+}
+.contact h2{margin-top:0}.contact p{color:var(--muted);max-width:650px}
+.contact-actions{display:flex;flex-direction:column;gap:10px;min-width:240px}
+.mono{font-family:"IBM Plex Mono",monospace}
+.footer{padding:28px 0 45px;color:#7f8b9c;font-size:12px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+@media(max-width:900px){
+  .nav-links a:not(.nav-cta){display:none}
+  .hero-grid,.project-feature,.contact{grid-template-columns:1fr}
+  .portrait-wrap{margin:20px auto 0;max-width:430px}
+  .project-ui{min-height:auto}
+  .services{grid-template-columns:1fr 1fr}
+  .metrics{grid-template-columns:1fr 1fr}
+  .contact-actions{flex-direction:row;flex-wrap:wrap}
+}
+@media(max-width:620px){
+  .container{width:min(100% - 28px,1160px)}
+  .hero{padding-top:56px}
+  .section{padding:58px 0}
+  .section-head{display:block}
+  .section-sub{margin-top:14px}
+  .services,.project-grid,.feature-list{grid-template-columns:1fr}
+  .metrics{grid-template-columns:1fr 1fr}
+  .portrait-label{left:10px}
+  .contact{padding:26px}
+  .contact-actions{flex-direction:column}
+  h1{font-size:52px}
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Build with Femi home">
-      <span class="brand-mark" aria-hidden="true">BF</span>
-      <span>
-        <strong>Build with Femi</strong>
-        <small>Python engineer</small>
-      </span>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-avatar"><img src="./assets/pycoder-avatar-v3.jpg?v=20260902-3" alt="Olawumi Oluwafemi" width="180" height="180" loading="eager" decoding="async"></span>
+      <span>PYcoder<small>Olawumi Oluwafemi</small></span>
     </a>
-
-    <nav aria-label="Primary navigation">
-      <a href="#task-manager">Task Manager</a>
+    <div class="nav-links">
       <a href="#projects">Projects</a>
-      <a href="https://github.com/Oluwafemi1x" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </nav>
+      <a href="#services">Services</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact" class="nav-cta">Let's work together</a>
+    </div>
+  </div>
+</nav>
 
-    <button class="mode-toggle" type="button" aria-label="Switch between light and dark mode" title="Toggle colour theme">
-      <i class="fa fa-moon-o" aria-hidden="true"></i>
-    </button>
-  </header>
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Available for remote work & freelance projects</div>
+      <h1>Building reliable software with <span class="accent">Python.</span></h1>
+      <p class="hero-copy">
+        I’m <strong>Olawumi Oluwafemi</strong>, also known as <strong>Pycoder</strong> — a Python developer focused on backend systems, automation, debugging, database-backed applications and practical business software.
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#projects">View my work →</a>
+        <a class="btn btn-secondary" href="mailto:freshfemi1990@gmail.com?subject=Project%20Inquiry%20for%20Pycoder">Start a project</a>
+        <a class="btn btn-secondary" href="https://github.com/Oluwafemi1x" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+      <div class="hero-meta">
+        <span>📍 Akure, Nigeria</span>
+        <span>☎ <a href="tel:+2348148170810">+234 814 817 0810</a></span>
+        <span>✉ <a href="mailto:freshfemi1990@gmail.com">freshfemi1990@gmail.com</a></span>
+      </div>
+    </div>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">Practical software. Thoughtful engineering.</p>
-      <h1 id="hero-title">Organise today.<br><span>Build what matters.</span></h1>
-      <p class="hero-copy">A focused task manager and a growing collection of dependable Python products built by Oluwafemi Olawumi Steven.</p>
-      <a class="primary-link" href="#task-manager">Open Task Manager <span aria-hidden="true">↓</span></a>
-    </section>
-
-    <section id="task-manager" class="task-section" aria-labelledby="task-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Live project · 01</p>
-          <h2 id="task-title">Task Manager</h2>
+    <div class="portrait-wrap">
+      <div class="portrait-glow"></div>
+      <div class="portrait-card">
+        <img src="./assets/pycoder-hero.jpg?v=20260902-2" alt="Olawumi Oluwafemi — Pycoder" width="320" height="400" loading="eager" fetchpriority="high" decoding="async">
+        <div class="portrait-label">
+          <b>Olawumi Oluwafemi</b>
+          <span>@pycoder · Python Developer</span>
         </div>
-        <p>Add, search, save, clear, and schedule reminders for everyday tasks. Your list stays privately in this browser.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <div class="metrics">
+      <div class="metric"><b>Python</b><span>Backend applications & automation</span></div>
+      <div class="metric"><b>APIs</b><span>Flask, FastAPI concepts & integrations</span></div>
+      <div class="metric"><b>SQL</b><span>SQLite, relational data & persistence</span></div>
+      <div class="metric"><b>Debug</b><span>Tracebacks, logic, database & workflow issues</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Featured work</div>
+        <h2>Projects built around real problems.</h2>
+      </div>
+      <p class="section-sub">I focus on software that solves operational problems: record management, authentication, automation, APIs and day-to-day business workflows.</p>
+    </div>
+
+    <article class="project-feature">
+      <div class="project-copy">
+        <div class="project-number">01 / FLAGSHIP PROJECT</div>
+        <h3>FESOMI School Management System</h3>
+        <p>A desktop school administration system built with Python, Tkinter and SQLite, designed around role-based access and the daily workflows schools actually need.</p>
+
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">Tkinter</span><span class="tag">SQLite</span>
+          <span class="tag">Authentication</span><span class="tag">RBAC</span><span class="tag">PBKDF2</span>
+        </div>
+
+        <div class="feature-list">
+          <div class="feature">Student management</div>
+          <div class="feature">Course enrollment</div>
+          <div class="feature">Results & grading</div>
+          <div class="feature">Attendance records</div>
+          <div class="feature">Payment tracking</div>
+          <div class="feature">User roles & permissions</div>
+          <div class="feature">Audit logging</div>
+          <div class="feature">Reports & dashboards</div>
+        </div>
+
+        <div class="ctas">
+          <a class="btn btn-primary" href="https://github.com/Oluwafemi1x/FESOMI-School-Management-System" target="_blank" rel="noreferrer">View repository →</a>
+          <a class="btn btn-secondary" href="mailto:freshfemi1990@gmail.com?subject=School%20Management%20System%20Demo">Request demo</a>
+        </div>
+        <p style="font-size:12px;margin-top:14px;color:#7f8b9c">Repository is currently private; code access can be provided to serious clients or recruiters.</p>
       </div>
 
-      <div class="task-manager-shell container">
-        <div class="task-input d-flex justify-content-center">
-          <label class="visually-hidden" for="taskInput">New task</label>
-          <input type="text" id="taskInput" placeholder="What needs to be done?" class="form-control me-2" maxlength="240" autocomplete="off">
-          <button id="addTaskBtn" class="btn btn-primary" type="button">Add Task</button>
-        </div>
-
-        <div class="task-actions text-center mt-3">
-          <button id="saveTasksBtn" class="btn btn-success me-2" type="button">Save Tasks</button>
-          <button id="clearAllBtn" class="btn btn-warning" type="button">Clear All</button>
-        </div>
-
-        <label class="visually-hidden" for="searchInput">Search tasks</label>
-        <input type="search" id="searchInput" placeholder="Search your tasks" class="form-control my-3" autocomplete="off">
-        <p id="emptyState" class="empty-state">Your task list is ready.</p>
-        <ul class="task-list list-group" id="taskList" aria-live="polite"></ul>
-        <p id="taskStatus" class="task-status" role="status" aria-live="polite"></p>
-      </div>
-    </section>
-
-    <section id="projects" class="projects-section" aria-labelledby="projects-title">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Completed engineering work</p>
-          <h2 id="projects-title">Project Portfolio</h2>
-        </div>
-        <p>Four completed products built around real operational problems, dependable workflows, and maintainable code.</p>
-      </div>
-
-      <div class="project-grid">
-        <article class="portfolio-card portfolio-card--featured">
-          <div class="card-topline">
-            <span class="project-index">04</span>
-            <span class="project-status"><i></i> Completed · Deployment ready</span>
-          </div>
-          <div class="card-layout">
-            <div>
-              <p class="project-type">Telegram automation · Open source</p>
-              <h3>ProofThread</h3>
-              <p class="project-tagline">Accountable group memory for Telegram.</p>
-              <p>Captures evidence-linked decisions, owned actions, deadlines, and unanswered questions without silently archiving the entire chat.</p>
+      <div class="project-ui">
+        <div class="app-window" aria-label="School management system interface preview">
+          <div class="app-top"><span class="app-dot"></span><span class="app-dot"></span><span class="app-dot"></span></div>
+          <div class="app-body">
+            <div class="sidebar">
+              <strong>SCHOOL<br>MANAGEMENT</strong>
+              <div class="side-item active">Dashboard</div>
+              <div class="side-item">Students</div>
+              <div class="side-item">Courses</div>
+              <div class="side-item">Enrollment</div>
+              <div class="side-item">Results</div>
+              <div class="side-item">Attendance</div>
+              <div class="side-item">Payments</div>
             </div>
-            <div class="mini-thread" aria-hidden="true">
-              <span>/decision Launch Friday</span>
-              <span>Decision captured ✓</span>
+            <div class="dashboard">
+              <h4>Admin Dashboard</h4>
+              <div class="stat-row">
+                <div class="stat-card"><span>Students</span><b>248</b></div>
+                <div class="stat-card"><span>Courses</span><b>18</b></div>
+                <div class="stat-card"><span>Payments</span><b>96%</b></div>
+              </div>
+              <div class="fake-table">
+                <b style="font-size:10px">Recent activity</b>
+                <div class="fake-line"></div><div class="fake-line"></div><div class="fake-line"></div><div class="fake-line"></div>
+              </div>
             </div>
           </div>
-          <ul class="project-highlights">
-            <li>Human-confirmed records</li>
-            <li>Due reminders and exports</li>
-            <li>PostgreSQL and Alembic</li>
-          </ul>
-          <div class="tech-stack" aria-label="ProofThread technologies"><span>Python</span><span>aiogram</span><span>PostgreSQL</span><span>Docker</span></div>
-          <div class="project-links">
-            <a class="project-button" href="https://github.com/Oluwafemi1x/proofthread-telegram-bot" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
-            <a class="project-button project-button--secondary" href="https://github.com/Oluwafemi1x/proofthread-telegram-bot#readme" target="_blank" rel="noopener noreferrer">Documentation <i class="fa fa-external-link" aria-hidden="true"></i></a>
-          </div>
-          <p class="availability"><i class="fa fa-info-circle" aria-hidden="true"></i> Public source available. Live Telegram hosting is pending.</p>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="card-topline">
-            <span class="project-index">03</span>
-            <span class="project-status project-status--live"><i></i> Live</span>
-          </div>
-          <p class="project-type">Web utility · Public demo</p>
-          <h3>Pycoder URL Shortener</h3>
-          <p>A polished browser-based URL shortener with resilient provider fallback, custom aliases, copy controls, and private local history.</p>
-          <ul class="project-highlights">
-            <li>Reliable API fallback</li>
-            <li>Responsive interface</li>
-            <li>GitHub Pages deployment</li>
-          </ul>
-          <div class="tech-stack" aria-label="URL Shortener technologies"><span>JavaScript</span><span>REST API</span><span>HTML</span><span>CSS</span></div>
-          <div class="project-links">
-            <a class="project-button project-button--live" href="https://oluwafemi1x.github.io/url-shortener/" target="_blank" rel="noopener noreferrer"><i class="fa fa-play-circle" aria-hidden="true"></i> Live Demo</a>
-            <a class="project-button project-button--secondary" href="https://github.com/Oluwafemi1x/url-shortener" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
-          </div>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="card-topline">
-            <span class="project-index">02</span>
-            <span class="project-status"><i></i> Completed · Desktop</span>
-          </div>
-          <p class="project-type">Education technology · Desktop application</p>
-          <h3>FESOMI School Management System</h3>
-          <p>A multi-module school operations platform for students, staff, attendance, fees, results, guardians, health records, documents, and reporting.</p>
-          <ul class="project-highlights">
-            <li>Admin and staff RBAC</li>
-            <li>Payments and academic records</li>
-            <li>Reports and data export</li>
-          </ul>
-          <div class="tech-stack" aria-label="FESOMI technologies"><span>Python</span><span>Tkinter</span><span>SQLite</span><span>RBAC</span></div>
-          <p class="availability"><i class="fa fa-desktop" aria-hidden="true"></i> Installable Windows desktop project. Demo and repository available on request.</p>
-        </article>
-
-        <article class="portfolio-card">
-          <div class="card-topline">
-            <span class="project-index">01</span>
-            <span class="project-status project-status--live"><i></i> Live</span>
-          </div>
-          <p class="project-type">Productivity · Public demo</p>
-          <h3>Task Manager</h3>
-          <p>A responsive productivity application for creating, searching, saving, deleting, and scheduling reminders for everyday tasks.</p>
-          <ul class="project-highlights">
-            <li>Private browser persistence</li>
-            <li>Search and reminders</li>
-            <li>Responsive light and dark themes</li>
-          </ul>
-          <div class="tech-stack" aria-label="Task Manager technologies"><span>JavaScript</span><span>LocalStorage</span><span>HTML</span><span>CSS</span></div>
-          <div class="project-links">
-            <a class="project-button project-button--live" href="https://oluwafemi1x.github.io/Task-Manager/" target="_blank" rel="noopener noreferrer"><i class="fa fa-play-circle" aria-hidden="true"></i> Live Demo</a>
-            <a class="project-button project-button--secondary" href="https://github.com/Oluwafemi1x/Task-Manager" target="_blank" rel="noopener noreferrer"><i class="fa fa-github" aria-hidden="true"></i> GitHub</a>
-          </div>
-        </article>
+        </div>
       </div>
-    </section>
-  </main>
+    </article>
 
-  <footer class="footer">
-    <p>Designed and engineered by <strong>Oluwafemi Olawumi Steven</strong>.</p>
-    <a href="https://github.com/Oluwafemi1x" target="_blank" rel="noopener noreferrer">GitHub <i class="fa fa-github" aria-hidden="true"></i></a>
-    <p>&copy; <span id="currentYear">2026</span> Build with Femi.</p>
-  </footer>
+    <div class="project-grid">
+      <article class="project-card">
+        <div class="project-number">02</div>
+        <h3>Task Manager</h3>
+        <p>A clean productivity project with task creation, filtering, persistence and a focused UI — built to sharpen practical frontend and application logic.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML</span><span class="tag">CSS</span></div>
+        <a class="btn btn-secondary" href="https://github.com/Oluwafemi1x/Task-Manager" target="_blank" rel="noreferrer">View on GitHub</a>
+      </article>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
+      <article class="project-card">
+        <div class="project-number">03</div>
+        <h3>URL Shortener</h3>
+        <p>A web application project centered on URL processing, backend logic and practical web development workflows.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Web App</span></div>
+        <a class="btn btn-secondary" href="https://github.com/Oluwafemi1x/url-shortener" target="_blank" rel="noreferrer">View on GitHub</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">What I can help with</div>
+        <h2>Development services.</h2>
+      </div>
+      <p class="section-sub">From a broken script to a small internal system, I work best on practical, clearly scoped problems where software can save time or remove repetitive work.</p>
+    </div>
+
+    <div class="services">
+      <div class="service"><div class="service-icon">&lt;/&gt;</div><h3>Python Development</h3><p>Small backend tools, database-backed applications, utilities and custom business software.</p></div>
+      <div class="service"><div class="service-icon">!</div><h3>Bug Fixing</h3><p>Tracebacks, logic errors, Flask/FastAPI issues, SQLite/SQL bugs, API/JSON problems and broken scripts.</p></div>
+      <div class="service"><div class="service-icon">↻</div><h3>Automation</h3><p>Selenium workflows, repetitive file tasks, CSV/JSON processing and practical process automation.</p></div>
+      <div class="service"><div class="service-icon">API</div><h3>API Integration</h3><p>REST APIs, data exchange, third-party integrations, request/response handling and troubleshooting.</p></div>
+      <div class="service"><div class="service-icon">DB</div><h3>Database Work</h3><p>SQLite/SQL schema design, CRUD workflows, validation, persistence and database debugging.</p></div>
+      <div class="service"><div class="service-icon">SYS</div><h3>Business Systems</h3><p>School, admin and small-business management tools customized around real operational needs.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="stack">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Toolbox</div>
+        <h2>Technologies I work with.</h2>
+      </div>
+    </div>
+    <div class="stack">
+      <span>Python</span><span>Flask</span><span>FastAPI</span><span>SQLite</span><span>SQL</span>
+      <span>Tkinter</span><span>Selenium</span><span>REST APIs</span><span>JSON</span><span>Git</span>
+      <span>GitHub</span><span>JavaScript</span><span>Angular</span><span>HTML5</span><span>CSS3</span>
+      <span>Bootstrap</span><span>Tailwind CSS</span><span>PowerShell</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact">
+      <div>
+        <div class="kicker">Let’s build something useful</div>
+        <h2>Need a Python developer or a fast bug fix?</h2>
+        <p>Send the problem, traceback, expected result, or project brief. I’ll tell you what I need, whether it’s within my scope, and the best next step.</p>
+        <p class="mono" style="font-size:12px;color:#d8e0ea">Olawumi Oluwafemi · “Pycoder” · Akure, Nigeria</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="https://wa.me/2348148170810" target="_blank" rel="noreferrer">WhatsApp me</a>
+        <a class="btn btn-secondary" href="tel:+2348148170810">Call +234 814 817 0810</a>
+        <a class="btn btn-secondary" href="mailto:freshfemi1990@gmail.com">Send email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© 2026 Olawumi Oluwafemi · Pycoder</span>
+    <span>Python Developer · Automation · Backend Systems</span>
+  </div>
+</footer>
 </body>
 </html>
