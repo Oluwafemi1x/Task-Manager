@@ -358,7 +358,7 @@ a { color: inherit; }
   box-shadow: 0 24px 58px rgba(0, 0, 0, 0.42);
 }
 
-.fesomi-visual .project-shot { aspect-ratio: 3 / 2; }
+.fesomi-visual .project-shot { aspect-ratio: 32 / 19; }
 .url-visual .project-shot { aspect-ratio: 10 / 7; }
 .project-shot-frame .visual-index {
   z-index: 2;
