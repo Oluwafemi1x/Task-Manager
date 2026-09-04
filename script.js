@@ -1,89 +1,86 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const taskInput = document.getElementById('taskInput');
-  const addTaskBtn = document.getElementById('addTaskBtn');
-  const taskList = document.getElementById('taskList');
-  const saveTasksBtn = document.getElementById('saveTasksBtn');
-  const clearAllBtn = document.getElementById('clearAllBtn');
-  const searchInput = document.getElementById('searchInput');
-  const modeToggle = document.querySelector('.mode-toggle');
+document.addEventListener('DOMContentLoaded', () => {
+  const root = document.documentElement;
+  const themeToggle = document.querySelector('.theme-toggle');
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const filterButtons = [...document.querySelectorAll('.filter-button')];
+  const projects = [...document.querySelectorAll('.project')];
+  const emptyProjects = document.querySelector('.empty-projects');
+  const year = document.getElementById('year');
 
-  // Ensure task input can be focused
-  taskInput.focus();
-
-  addTaskBtn.addEventListener('click', function() {
-    const taskText = taskInput.value.trim();
-    if (taskText !== '') {
-      const taskItem = document.createElement('li');
-      taskItem.classList.add('task-item', 'list-group-item');
-      taskItem.innerHTML = `
-        ${taskText}
-        <button class="btn btn-danger btn-sm">Delete</button>
-        <button class="btn reminder-btn btn-sm">Remind Me</button>
-      `;
-      taskList.appendChild(taskItem);
-      taskInput.value = ''; // Clear input after adding
+  const preferredTheme = () => {
+    try {
+      return localStorage.getItem('femi-portfolio-theme') ||
+        (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    } catch (_) {
+      return 'dark';
     }
-  });
+  };
 
-  // Remove task functionality
-  taskList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('btn-danger')) {
-      e.target.parentElement.remove();
+  const setTheme = (theme) => {
+    const isLight = theme === 'light';
+    root.dataset.theme = isLight ? 'light' : 'dark';
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isLight));
+      themeToggle.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} theme`);
     }
+    try { localStorage.setItem('femi-portfolio-theme', isLight ? 'light' : 'dark'); } catch (_) {}
+  };
+
+  setTheme(preferredTheme());
+  themeToggle?.addEventListener('click', () => setTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
+
+  const closeMenu = () => {
+    if (!menuToggle || !mobileMenu) return;
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open menu');
+    mobileMenu.hidden = true;
+    document.body.classList.remove('menu-open');
+  };
+
+  menuToggle?.addEventListener('click', () => {
+    const willOpen = menuToggle.getAttribute('aria-expanded') !== 'true';
+    menuToggle.setAttribute('aria-expanded', String(willOpen));
+    menuToggle.setAttribute('aria-label', willOpen ? 'Close menu' : 'Open menu');
+    mobileMenu.hidden = !willOpen;
+    document.body.classList.toggle('menu-open', willOpen);
   });
 
-  // Toggle dark mode
-  modeToggle.addEventListener('click', function() {
-    document.body.classList.toggle('dark-mode');
-  });
+  mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 980) closeMenu(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
 
-  // Save tasks to localStorage
-  saveTasksBtn.addEventListener('click', function() {
-    const tasks = Array.from(taskList.children).map(task => task.textContent.trim());
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  });
+  filterButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.filter;
+      filterButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
 
-  // Clear all tasks and localStorage
-  clearAllBtn.addEventListener('click', function() {
-    taskList.innerHTML = '';
-    localStorage.removeItem('tasks');
-  });
-
-  // Search task functionality
-  searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    const tasks = Array.from(taskList.children);
-    tasks.forEach(task => {
-      const taskText = task.textContent.toLowerCase();
-      task.style.display = taskText.includes(searchTerm) ? 'block' : 'none';
+      let visibleCount = 0;
+      projects.forEach((project) => {
+        const visible = filter === 'all' || project.dataset.category === filter;
+        project.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+      if (emptyProjects) emptyProjects.hidden = visibleCount !== 0;
     });
   });
 
-  // Add event listener for "Remind Me" button
-  taskList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('reminder-btn')) {
-      const taskItem = e.target.parentElement;
-      const taskText = taskItem.textContent.trim();
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  } else {
+    document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
+  }
 
-      // Ask the user to set a time for the reminder (in minutes)
-      const reminderTime = parseInt(prompt('Set reminder time in minutes:'), 10);
-
-      if (!isNaN(reminderTime) && reminderTime > 0) {
-        // Convert reminder time from minutes to milliseconds
-        const reminderMilliseconds = reminderTime * 60 * 1000;
-
-        // Use setTimeout to trigger a reminder after the specified time
-        setTimeout(() => {
-          alert(`Reminder: Time to complete your task: "${taskText}"`);
-          // Optional: You can also play an alarm sound here if needed
-          // let alarm = new Audio('path-to-your-alarm-sound.mp3');
-          // alarm.play();
-        }, reminderMilliseconds);
-
-        alert(`Reminder set for "${taskText}" in ${reminderTime} minute(s)!`);
-      } else {
-        alert('Please enter a valid time in minutes.');
-      }
-    }
-  });
+  if (year) year.textContent = String(new Date().getFullYear());
 });
