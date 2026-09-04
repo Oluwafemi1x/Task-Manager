@@ -1,34 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.documentElement;
-  const themeToggle = document.querySelector('.theme-toggle');
   const menuToggle = document.querySelector('.menu-toggle');
   const mobileMenu = document.querySelector('.mobile-menu');
   const filterButtons = [...document.querySelectorAll('.filter-button')];
   const projects = [...document.querySelectorAll('.project')];
   const emptyProjects = document.querySelector('.empty-projects');
   const year = document.getElementById('year');
-
-  const preferredTheme = () => {
-    try {
-      return localStorage.getItem('femi-portfolio-theme') ||
-        (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    } catch (_) {
-      return 'dark';
-    }
-  };
-
-  const setTheme = (theme) => {
-    const isLight = theme === 'light';
-    root.dataset.theme = isLight ? 'light' : 'dark';
-    if (themeToggle) {
-      themeToggle.setAttribute('aria-pressed', String(isLight));
-      themeToggle.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} theme`);
-    }
-    try { localStorage.setItem('femi-portfolio-theme', isLight ? 'light' : 'dark'); } catch (_) {}
-  };
-
-  setTheme(preferredTheme());
-  themeToggle?.addEventListener('click', () => setTheme(root.dataset.theme === 'light' ? 'dark' : 'light'));
 
   const closeMenu = () => {
     if (!menuToggle || !mobileMenu) return;
