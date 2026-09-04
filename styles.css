@@ -340,6 +340,36 @@ a { color: inherit; }
 .project--violet .project-visual { background: radial-gradient(circle at 18% 20%, rgba(100, 225, 180, 0.22), transparent 28%), linear-gradient(145deg, #132238, #09111d); }
 .visual-index { position: absolute; top: 20px; left: 23px; font-size: 0.73rem; font-weight: 900; letter-spacing: 0.14em; }
 
+.project-shot-frame {
+  min-height: 540px;
+  padding: clamp(28px, 4vw, 52px);
+}
+
+.project-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  object-position: center;
+  background: #08101d;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 24px 58px rgba(0, 0, 0, 0.42);
+}
+
+.fesomi-visual .project-shot { aspect-ratio: 3 / 2; }
+.url-visual .project-shot { aspect-ratio: 10 / 7; }
+.project-shot-frame .visual-index {
+  z-index: 2;
+  padding: 5px 9px;
+  color: var(--text);
+  background: rgba(7, 11, 20, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+
 .app-window { width: min(540px, 100%); overflow: hidden; color: #eaf1ff; background: #11182a; border: 1px solid rgba(255,255,255,.18); border-radius: 16px; box-shadow: 0 28px 60px rgba(0,0,0,.3); transform: rotate(-2.5deg); }
 .app-top { display: flex; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 0.78rem; font-weight: 800; }
 .app-top small { color: #9ca9c1; font-size: 0.67rem; font-weight: 600; }
@@ -470,6 +500,8 @@ footer p { margin: 0; } footer p:last-child { justify-self: end; }.footer-brand 
   .section-intro { margin-bottom: 48px; }
   .project-list { gap: 80px; }
   .project-visual { min-height: 400px; padding: 44px 20px; border-radius: 18px; }
+  .project-shot-frame { min-height: 320px; padding: 34px 14px 22px; }
+  .project-shot { max-height: none; border-radius: 10px; }
   .app-dashboard { padding: 15px; }.chart { gap: 7px; }
   .project-meta { margin-bottom: 22px; }
   .project-copy h3 { font-size: 2.7rem; }
