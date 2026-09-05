@@ -1,4 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const projectList = document.querySelector('.project-list');
+  const taskManager = [...document.querySelectorAll('.project')].find((project) =>
+    project.querySelector('h3')?.textContent.trim() === 'Task Manager'
+  );
+
+  if (projectList && taskManager && !document.querySelector('[data-project="marginguard"]')) {
+    const marginGuard = document.createElement('article');
+    marginGuard.className = 'project project--blue reveal';
+    marginGuard.dataset.category = 'python';
+    marginGuard.dataset.project = 'marginguard';
+    marginGuard.innerHTML = `
+      <div class="project-visual project-shot-frame">
+        <iframe src="https://marginguard-automation.onrender.com" title="Live MarginGuard automation dashboard" loading="lazy" style="display:block;width:100%;height:460px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff;box-shadow:0 24px 58px rgba(0,0,0,.42);" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <span class="visual-index">07</span>
+      </div>
+      <div class="project-copy">
+        <div class="project-meta"><span>Competitive intelligence automation</span><span>Live</span></div>
+        <h3>MarginGuard</h3>
+        <p>A production-deployed Python automation system that uses browser automation to collect competitor pricing and stock signals, preserve scan history, and generate CSV and Excel reports for faster commercial decisions.</p>
+        <ul class="tag-list" aria-label="Technologies"><li>Python</li><li>FastAPI</li><li>Playwright</li><li>SQLite</li><li>Excel</li></ul>
+        <div class="link-row">
+          <a class="text-link" href="https://marginguard-automation.onrender.com" target="_blank" rel="noopener noreferrer">Open live site <span>↗</span></a>
+          <a class="text-link" href="https://github.com/Oluwafemi1x/marginguard-automation" target="_blank" rel="noopener noreferrer">GitHub <span>↗</span></a>
+          <a class="text-link" href="https://marginguard-automation.onrender.com/docs" target="_blank" rel="noopener noreferrer">API docs <span>↗</span></a>
+        </div>
+      </div>`;
+    projectList.insertBefore(marginGuard, taskManager);
+  }
+
+  const featuredProjectFact = [...document.querySelectorAll('.fact-grid div')].find((item) =>
+    item.querySelector('span')?.textContent.trim() === 'Featured projects'
+  );
+  if (featuredProjectFact?.querySelector('strong')) {
+    featuredProjectFact.querySelector('strong').textContent = '07';
+  }
+
   const menuToggle = document.querySelector('.menu-toggle');
   const mobileMenu = document.querySelector('.mobile-menu');
   const filterButtons = [...document.querySelectorAll('.filter-button')];
