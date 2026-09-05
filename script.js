@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.portrait-label')?.remove();
+
   const projectList = document.querySelector('.project-list');
   const taskManager = [...document.querySelectorAll('.project')].find((project) =>
     project.querySelector('h3')?.textContent.trim() === 'Task Manager'
