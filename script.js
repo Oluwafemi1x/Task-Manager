@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('.portrait-label')?.remove();
 
+  // Make the role immediately clear to recruiters without changing the visual system.
+  const heroIntro = document.querySelector('.hero-bottom p');
+  if (heroIntro) {
+    heroIntro.innerHTML = '<strong>Python Backend &amp; Automation Developer.</strong> I build dependable APIs, browser automations, database-backed systems, and practical business software from idea to deployment.';
+  }
+
   const projectList = document.querySelector('.project-list');
   const taskManager = [...document.querySelectorAll('.project')].find((project) =>
     project.querySelector('h3')?.textContent.trim() === 'Task Manager'
@@ -19,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="project-copy">
         <div class="project-meta"><span>Competitive intelligence automation</span><span>Live</span></div>
         <h3>MarginGuard</h3>
-        <p>A production-deployed Python automation system that uses browser automation to collect competitor pricing and stock signals, preserve scan history, and generate CSV and Excel reports for faster commercial decisions.</p>
+        <p>A production-deployed competitive intelligence system that turns browser-collected pricing and stock signals into evidence-backed commercial decisions and downloadable reports.</p>
+        <p class="engineering-proof"><strong>Engineering:</strong> Playwright browser workers → structured extraction → pricing/risk engine → screenshot evidence → SQLite history → CSV/Excel reporting.</p>
         <ul class="tag-list" aria-label="Technologies"><li>Python</li><li>FastAPI</li><li>Playwright</li><li>SQLite</li><li>Excel</li></ul>
         <div class="link-row">
           <a class="text-link" href="https://marginguard-automation.onrender.com" target="_blank" rel="noopener noreferrer">Open live site <span>↗</span></a>
@@ -29,6 +36,22 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>`;
     projectList.insertBefore(marginGuard, taskManager);
   }
+
+  const enhanceProject = (name, proof) => {
+    const project = [...document.querySelectorAll('.project')].find((item) =>
+      item.querySelector('h3')?.textContent.replace(/\s+/g, ' ').trim().includes(name)
+    );
+    if (!project || project.querySelector('.engineering-proof')) return;
+    const description = project.querySelector('.project-copy > p');
+    if (!description) return;
+    const line = document.createElement('p');
+    line.className = 'engineering-proof';
+    line.innerHTML = `<strong>Engineering:</strong> ${proof}`;
+    description.insertAdjacentElement('afterend', line);
+  };
+
+  enhanceProject('FESOMI School', 'modular Python/Tkinter workflows → SQLite persistence → role-based access → audit/security controls → reporting, exports and Windows packaging.');
+  enhanceProject('OpsPilot', 'FastAPI REST layer → JWT/RBAC dependencies → SQLAlchemy tenant-aware data model → PostgreSQL → Alembic migrations → Pytest/CI → Render deployment.');
 
   const featuredProjectFact = [...document.querySelectorAll('.fact-grid div')].find((item) =>
     item.querySelector('span')?.textContent.trim() === 'Featured projects'
