@@ -7,6 +7,24 @@ document.addEventListener('DOMContentLoaded', () => {
     heroIntro.innerHTML = '<strong>Python Backend &amp; Automation Developer.</strong> I build dependable APIs, browser automations, database-backed systems, and practical business software from idea to deployment.';
   }
 
+  // Keep portfolio previews instant and stable. Render-hosted apps can sleep, so
+  // the cards use static interface previews while the live links still open the real apps.
+  const opsPilotProject = [...document.querySelectorAll('.project')].find((project) =>
+    project.querySelector('h3')?.textContent.trim() === 'OpsPilot'
+  );
+  const opsPilotFrame = opsPilotProject?.querySelector('iframe');
+  if (opsPilotFrame) {
+    const preview = document.createElement('img');
+    preview.className = 'project-shot';
+    preview.src = 'assets/opspilot-interface.svg';
+    preview.alt = 'OpsPilot sign-in interface showing the production operations workspace design';
+    preview.width = 1280;
+    preview.height = 760;
+    preview.loading = 'lazy';
+    preview.decoding = 'async';
+    opsPilotFrame.replaceWith(preview);
+  }
+
   const projectList = document.querySelector('.project-list');
   const taskManager = [...document.querySelectorAll('.project')].find((project) =>
     project.querySelector('h3')?.textContent.trim() === 'Task Manager'
@@ -19,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     marginGuard.dataset.project = 'marginguard';
     marginGuard.innerHTML = `
       <div class="project-visual project-shot-frame">
-        <iframe src="https://marginguard-automation.onrender.com" title="Live MarginGuard automation dashboard" loading="lazy" style="display:block;width:100%;height:460px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:#fff;box-shadow:0 24px 58px rgba(0,0,0,.42);" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <img class="project-shot" src="assets/marginguard-interface.svg" alt="MarginGuard command center showing pricing risk metrics, Playwright automation pipeline, and revenue signals" width="1280" height="760" loading="lazy" decoding="async">
         <span class="visual-index">07</span>
       </div>
       <div class="project-copy">
