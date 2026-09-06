@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <a class="text-link" href="https://marginguard-automation.onrender.com/docs" target="_blank" rel="noopener noreferrer">API docs <span>↗</span></a>
         </div>
       </div>`;
-    projectList.insertBefore(marginGuard, taskManager);
+    taskManager.insertAdjacentElement('afterend', marginGuard);
   }
 
   const enhanceProject = (name, proof) => {
